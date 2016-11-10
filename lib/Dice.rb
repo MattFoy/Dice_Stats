@@ -9,6 +9,7 @@ module Dice_stats
 		attr_accessor :sides
 
 		@probability_distribution
+		attr_reader :probability_distribution
 
 		def initialize(dice_count, dice_sides)
 			@count = dice_count

@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "Provides utilities for calculating dice statistics"
   s.authors     = ["Matthew Foy"]
   s.email       = 'mattfoy91@gmail.com'
-  s.files       = ["lib/dice_stats.rb", "lib/Dice.rb", "lib/Math_Utilities.rb", "lib/Dice_Set.rb"]
+  s.files       = ["lib/dice_stats.rb", "lib/Dice.rb", "lib/Math_Utilities.rb", "lib/Dice_Set.rb", "lib/Arbitrary_base_counter.rb"]
   s.homepage    =
     'http://matthewfoy.ca'
   s.license       = 'MIT'

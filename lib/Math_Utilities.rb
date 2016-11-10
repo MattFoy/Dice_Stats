@@ -1,3 +1,5 @@
+require 'Arbitrary_base_counter'
+
 module Dice_stats
 	class Math_Utilities
 		def self.Choose(a, b)
@@ -14,12 +16,55 @@ module Dice_stats
 			(1..a).inject(:*) || 0
 		end
 
-		def self.Cartesian_Product(collection_1, collection_2)
-			#collection_1 and _2 must be arrays of objects
+		def self.Cartesian_Product(arrays) #arrays is an array of array to cartesian product
+			result = []
+			if (arrays.class != [].class)
+				puts "Not an array"
+			elsif (arrays.length < 2)
+				puts "less than elements arrays"
+			elsif (arrays[0].class != [].class)
+				puts "Not an array of arrays"
+			else	
+				counter = Arbitrary_base_counter.new([*0..arrays.length-1].map { |i| arrays[i].length })
 
+				while !counter.overflow do
+					sub_result = []
+					(0..counter.length-1).each { |i|
+						sub_result << arrays[i][counter[i]]
+					}
+					result << sub_result
+
+					counter.increment
+				end
+			end
+
+			result
 		end
 
+		def self.Cartesian_Product_For_Probabilities(hashes) #hashes is a hash of hashes to cartesian product
+			result = []
+			if (hashes.class != Hash)
+				puts "Not an array"
+			elsif (hashes.length < 2)
+				puts "less than 2 elements in hashes"
+			elsif (hashes[0].class != Hash)
+				puts "Not a Hash of Hashes"
+			else
+				counter = Arbitrary_base_counter.new([*0..hashes.length-1].map { |i| hashes[i].length })
 
+				while !counter.overflow do
+					sub_result = []
+					(0..counter.length-1).each { |i|
+						sub_result << hashes[i][counter[i]]
+					}
+					result << sub_result
+
+					counter.increment
+				end
+			end
+
+			result
+		end
 
 		def self.Test_Suite
 			#Choose

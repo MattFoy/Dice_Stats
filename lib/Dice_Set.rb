@@ -7,6 +7,9 @@ module Dice_stats
 		@constant
 		@input_string
 
+		@probability_distribution
+		attr_reader :probability_distribution
+
 		attr_accessor :dice
 
 		def initialize(dice_string)
@@ -30,6 +33,14 @@ module Dice_stats
 			}
 
 			@dice.sort! { |d1,d2| d2.sides <=> d1.sides }
+
+			probability_distribution = []
+			combine_probability_distributions
+		end
+
+		def combine_probability_distributions
+			separate_distributions = @dice.map { |d| d.probability_distribution }
+			Math_Utilities.Cartesian_Product(separate_distributions)
 		end
 
 		def clean_string
