@@ -2,14 +2,8 @@ require 'bigdecimal'
 
 module Dice_Stats
 	class Dice
-		@count
-		attr_accessor :count
-
-		@sides
-		attr_accessor :sides
-
-		@probability_distribution
-		attr_accessor :probability_distribution
+		attr_accessor :count, :sides
+		attr_reader :probability_distribution
 
 		def initialize(dice_count, dice_sides)
 			@count = dice_count

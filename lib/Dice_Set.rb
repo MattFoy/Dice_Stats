@@ -3,11 +3,6 @@ require 'Math_Utilities'
 
 module Dice_Stats
 	class Dice_Set
-		@dice
-		@constant
-		@input_string
-
-		@probability_distribution
 		attr_reader :probability_distribution
 
 		attr_accessor :dice
@@ -55,7 +50,7 @@ module Dice_Stats
 		end
 
 		def print_probability
-			@probability_distribution.each { |k,v| puts "p(#{k}) => #{v.to_f.round(4)}"}
+			@probability_distribution.each { |k,v| puts "p(#{k}) => #{v.to_f.round(8)}"}
 		end
 
 	end
