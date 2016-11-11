@@ -61,12 +61,12 @@ module Dice_Stats
 			Math_Utilities.Cartesian_Product_For_Probabilities(separate_distributions)
 		end
 
-		def clean_string
+		def clean_string(with_constant=true)
 			formatted_string = ""
 			@dice.each { |d| 
 				formatted_string += d.count.to_s + "d" + d.sides.to_s + " + "
 			}
-			if @constant > 0
+			if with_constant && @constant > 0
 				formatted_string + @constant.to_s
 			else
 				formatted_string[0..formatted_string.length-4]

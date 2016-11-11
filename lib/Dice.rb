@@ -1,4 +1,5 @@
 require 'bigdecimal'
+require 'probability_cache_db'
 
 module Dice_Stats
 	class Dice
