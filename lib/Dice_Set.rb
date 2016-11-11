@@ -37,19 +37,19 @@ module Dice_Stats
 		end
 
 		def max
-			@dice.inject(0) { |memo, d| memo + d.max }.to_i
+			@dice.inject(0) { |memo, d| memo + d.max }.to_i + @constant
 		end
 
 		def min
-			@dice.inject(0) { |memo, d| memo + d.min }.to_i
+			@dice.inject(0) { |memo, d| memo + d.min }.to_i + @constant
 		end
 
 		def expected
-			@dice.inject(0) { |memo, d| memo + d.expected }.to_f
+			@dice.inject(0) { |memo, d| memo + d.expected }.to_f + @constant
 		end
 
 		def variance
-			@probability_distribution.inject(0) { |memo, (key,val)| memo + ((key - expected)**2 * val) }.round(10).to_f
+			@probability_distribution.inject(0) { |memo, (key,val)| memo + ((key - (expected - @constant))**2 * val) }.round(10).to_f
 		end
 
 		def standard_deviation
