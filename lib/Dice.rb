@@ -1,6 +1,6 @@
 require 'bigdecimal'
 
-module Dice_stats
+module Dice_Stats
 	class Dice
 		@count
 		attr_accessor :count
@@ -9,7 +9,7 @@ module Dice_stats
 		attr_accessor :sides
 
 		@probability_distribution
-		attr_reader :probability_distribution
+		attr_accessor :probability_distribution
 
 		def initialize(dice_count, dice_sides)
 			@count = dice_count

@@ -1,6 +1,6 @@
 require 'Arbitrary_base_counter'
 
-module Dice_stats
+module Dice_Stats
 	class Math_Utilities
 		def self.Choose(a, b)
 			if (a < 0 || b < 0 || (a < b))
@@ -42,8 +42,12 @@ module Dice_stats
 		end
 
 		def self.Cartesian_Product_For_Probabilities(hashes) #hashes is a hash of hashes to cartesian product
-			result = []
-			if (hashes.class != Hash)
+			result = {}
+			#puts
+			#puts "Considering hashes: #{hashes}"
+			#puts
+
+			if (hashes.class != Array)
 				puts "Not an array"
 			elsif (hashes.length < 2)
 				puts "less than 2 elements in hashes"
@@ -51,16 +55,38 @@ module Dice_stats
 				puts "Not a Hash of Hashes"
 			else
 				counter = Arbitrary_base_counter.new([*0..hashes.length-1].map { |i| hashes[i].length })
+				hashes.map! { |h| h.to_a }
+				set = 0
 
 				while !counter.overflow do
-					sub_result = []
+					value = 0
+					probability = 1					
+					sub_result = {}
+
+					#puts "Counter status: #{counter.print}"
+
 					(0..counter.length-1).each { |i|
-						sub_result << hashes[i][counter[i]]
+						value += hashes[i][counter[i]][0]
+						probability *= hashes[i][counter[i]][1]
+						#puts "\ti: #{i}, value: #{hashes[i][counter[i]][0]}, prob: #{hashes[i][counter[i]][1]}"
+						#puts "Incremental result: {#{value} => #{probability}}"
 					}
-					result << sub_result
+					set += 1
+					#puts "\tDone set \##{set}."
+					#puts "\tIncremental result: {#{value} => #{probability}}"
+					if (result.key?(value))
+						#puts "\tValue #{value} exists. Adding probability."
+						result[value] += probability
+					else
+						#puts "\tSaving new result."
+						result[value] = probability
+					end
 
 					counter.increment
+					#puts "Incrementing counter."
+					#puts
 				end
+				#puts "Done!"
 			end
 
 			result
@@ -96,10 +122,6 @@ module Dice_stats
 			Test_Factorial(4, 24)
 			Test_Factorial(3, 6)
 			Test_Factorial(2, 2)
-
-
-
-
 		end
 
 		def self.Test_Choose(a, b, expected)

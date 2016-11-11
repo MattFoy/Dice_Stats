@@ -1,7 +1,7 @@
 require 'Dice'
 require 'Math_Utilities'
 
-module Dice_stats
+module Dice_Stats
 	class Dice_Set
 		@dice
 		@constant
@@ -17,7 +17,7 @@ module Dice_stats
 			@constant = 0
 			@input_string = dice_string
 
-			split_string = dice_string.split('+')		
+			split_string = dice_string.split('+')
 
 			split_string.map!{|i| i.strip }
 
@@ -34,13 +34,12 @@ module Dice_stats
 
 			@dice.sort! { |d1,d2| d2.sides <=> d1.sides }
 
-			probability_distribution = []
-			combine_probability_distributions
+			@probability_distribution = combine_probability_distributions
 		end
 
 		def combine_probability_distributions
 			separate_distributions = @dice.map { |d| d.probability_distribution }
-			Math_Utilities.Cartesian_Product(separate_distributions)
+			Math_Utilities.Cartesian_Product_For_Probabilities(separate_distributions)
 		end
 
 		def clean_string
@@ -53,6 +52,10 @@ module Dice_stats
 			else
 				formatted_string[0..formatted_string.length-4]
 			end
+		end
+
+		def print_probability
+			@probability_distribution.each { |k,v| puts "p(#{k}) => #{v.to_f.round(4)}"}
 		end
 
 	end

@@ -1,4 +1,4 @@
-module Dice_stats
+module Dice_Stats
 	class Arbitrary_base_counter
 		attr_reader :overflow
 
@@ -40,6 +40,10 @@ module Dice_stats
 
 		def [](i)
 			@index[i][:val]
+		end
+
+		def print
+			puts @index
 		end
 	end
 end
