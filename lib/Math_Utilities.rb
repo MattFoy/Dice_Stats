@@ -45,16 +45,15 @@ module Dice_Stats
 
 		def self.Cartesian_Product_For_Probabilities(hashes) #hashes is a hash of hashes to cartesian product
 			result = {}
-			#puts
-			#puts "Considering hashes: #{hashes}"
-			#puts
 
 			if (hashes.class != Array)
 				puts "Not an array"
 			elsif (hashes.length == 1)
-				hashes[0]
+				puts "Returning first result"
+				result = hashes.first
 			elsif (hashes.length == 0)
-				Hash.new
+				puts "Returning new hash"
+				result = { 0 => 1 }
 			elsif (hashes[0].class != Hash)
 				puts "Not a Hash of Hashes"
 			else
@@ -67,30 +66,19 @@ module Dice_Stats
 					probability = 1					
 					sub_result = {}
 
-					#puts "Counter status: #{counter.print}"
-
 					(0..counter.length-1).each { |i|
 						value += hashes[i][counter[i]][0]
 						probability *= hashes[i][counter[i]][1]
-						#puts "\ti: #{i}, value: #{hashes[i][counter[i]][0]}, prob: #{hashes[i][counter[i]][1]}"
-						#puts "Incremental result: {#{value} => #{probability}}"
 					}
 					set += 1
-					#puts "\tDone set \##{set}."
-					#puts "\tIncremental result: {#{value} => #{probability}}"
 					if (result.key?(value))
-						#puts "\tValue #{value} exists. Adding probability."
 						result[value] += probability
 					else
-						#puts "\tSaving new result."
 						result[value] = probability
 					end
 
 					counter.increment
-					#puts "Incrementing counter."
-					#puts
 				end
-				#puts "Done!"
 			end
 
 			result
