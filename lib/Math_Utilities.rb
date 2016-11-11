@@ -19,9 +19,11 @@ module Dice_Stats
 		def self.Cartesian_Product(arrays) #arrays is an array of array to cartesian product
 			result = []
 			if (arrays.class != [].class)
-				puts "Not an array"
-			elsif (arrays.length < 2)
-				puts "less than elements arrays"
+				puts "Not an array"			
+			elsif (arrays.length == 1)
+				arrays[0]
+			elsif (arrays.length == 0)
+				puts "No input."
 			elsif (arrays[0].class != [].class)
 				puts "Not an array of arrays"
 			else	
@@ -49,8 +51,10 @@ module Dice_Stats
 
 			if (hashes.class != Array)
 				puts "Not an array"
-			elsif (hashes.length < 2)
-				puts "less than 2 elements in hashes"
+			elsif (hashes.length == 1)
+				hashes[0]
+			elsif (hashes.length == 0)
+				Hash.new
 			elsif (hashes[0].class != Hash)
 				puts "Not a Hash of Hashes"
 			else
