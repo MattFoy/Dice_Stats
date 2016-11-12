@@ -14,7 +14,15 @@ module Dice_Stats
 			if (@count < 0 || @sides < 0)
 				#error
 			else
-				calculate_probability_distribution
+				t1 = Time.now
+				if Cache.checkDice(@count.to_s + "d" + @sides.to_s)
+					@probability_distribution = Cache.getDice(@count.to_s + "d" + @sides.to_s)
+				else
+					@probability_distribution = calculate_probability_distribution
+					Cache.addDice(@count.to_s + "d" + @sides.to_s, @probability_distribution)
+				end
+				t2 = Time.now
+				puts "Probabilities determined in #{(t2-t1).round(5)}"
 			end
 		end
 
@@ -65,12 +73,12 @@ module Dice_Stats
 
 		def calculate_probability_distribution
 			number_of_possible_combinations = (@sides**@count)
-			puts "Number of possible combinations: #{number_of_possible_combinations}"
-
+			#puts "Number of possible combinations: #{number_of_possible_combinations}"
+			result = {}
 			# weep softly: http://mathworld.wolfram.com/Dice.html
 			(min..max).each { |p|
 				if p > (max + min) / 2
-					@probability_distribution[p] = @probability_distribution[max - p + min]
+					result[p] = result[max - p + min]
 				else
 					thing = (BigDecimal.new(p - @count) / BigDecimal.new(@sides)).floor
 
@@ -86,13 +94,13 @@ module Dice_Stats
 
 					#result = result.abs
 
-					@probability_distribution[p] = BigDecimal.new(c) / BigDecimal.new(number_of_possible_combinations)
+					result[p] = BigDecimal.new(c) / BigDecimal.new(number_of_possible_combinations)
 				end
 
-				puts "\tProbability of #{p}: #{@probability_distribution[p].add(0, 5).to_s('F')}" 
+				#puts "\tProbability of #{p}: #{@probability_distribution[p].add(0, 5).to_s('F')}" 
 			}
-
-			puts "Sum of probability_distribution: " + (@probability_distribution.inject(BigDecimal.new(0)) {|total, (k,v)| BigDecimal.new(total + v) }).add(0, 5).to_s('F')
+			@probability_distribution = result
+			#puts "Sum of probability_distribution: " + (@probability_distribution.inject(BigDecimal.new(0)) {|total, (k,v)| BigDecimal.new(total + v) }).add(0, 5).to_s('F')
 		end
 	end
 end

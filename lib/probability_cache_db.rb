@@ -1,4 +1,5 @@
 require 'sqlite3'
+require 'bigdecimal'
 
 module Dice_Stats
 	class DB_cache_connection
@@ -85,8 +86,11 @@ module Dice_Stats
 				values = []
 				probability_distribution.each { |k,v|  
 					values << "(#{diceset_id}, #{k}, #{v})"
-				}		
-				insert = "INSERT INO RollProbability (DiceSetId, Value, Probability) VALUES " + values.join(", ")
+				}
+				puts "Values:"
+				puts values
+
+				insert = "INSERT INTO RollProbability (DiceSetId, Value, Probability) VALUES " + values.join(", ")
 
 				db.execute insert		
 
@@ -101,15 +105,15 @@ module Dice_Stats
 			begin
 				db = SQLite3::Database.open(@@Path + @@DB_name)
 				
-				statement = db.prepare "SELECT Id FROM DiceSet WHERE Name = '#{dice_pattern}'"
-				diceset_id = statement.execute.first[0]
+				statement1 = db.prepare "SELECT Id FROM DiceSet WHERE Name = '#{dice_pattern}'"
+				diceset_id = statement1.execute.first[0]
 
 				statement2 = db.prepare "SELECT Value, Probability FROM RollProbability WHERE DiceSetId = #{diceset_id}"
 
 				rs = statement2.execute
 				result = {}
 				rs.each { |row|
-					result[row[0]] = row[1]
+					result[row[0]] = BigDecimal.new(row[1], 15)
 				}
 
 				return result
@@ -117,7 +121,8 @@ module Dice_Stats
 			rescue SQLite3::Exception => e 
 				puts e
 			ensure
-				statement.close if statement
+				statement1.close if statement1
+				statement2.close if statement2
 				db.close if db
 			end
 		end
