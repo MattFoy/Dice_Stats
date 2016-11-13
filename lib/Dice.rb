@@ -102,5 +102,13 @@ module Dice_Stats
 			@probability_distribution = result
 			#puts "Sum of probability_distribution: " + (@probability_distribution.inject(BigDecimal.new(0)) {|total, (k,v)| BigDecimal.new(total + v) }).add(0, 5).to_s('F')
 		end
+
+		def p(val)
+			if (@probability_distribution.key?(val))
+				return @probability_distribution[val]
+			else
+				return 0
+			end
+		end
 	end
 end

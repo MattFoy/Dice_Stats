@@ -26,22 +26,25 @@ module Dice_Stats
 				end
 			}
 
-			@dice.sort! { |d1,d2| d2.sides <=> d1.sides }
-
-			t1 = Time.now
-			if Cache.checkDice(self.clean_string(false))
-				@probability_distribution = Cache.getDice(self.clean_string(false))
+			if @dice.inject(0) { |memo,d| memo * d.count * d.sides } > 100
+				puts "Too complex"
 			else
-				@probability_distribution = combine_probability_distributions
-				Cache.addDice(self.clean_string(false), @probability_distribution)
+				@dice.sort! { |d1,d2| d2.sides <=> d1.sides }
+
+				t1 = Time.now
+				if Cache.checkDice(self.clean_string(false))
+					@probability_distribution = Cache.getDice(self.clean_string(false))
+				else
+					@probability_distribution = combine_probability_distributions
+					Cache.addDice(self.clean_string(false), @probability_distribution)
+				end
+				t2 = Time.now
+				puts "Probabilities determined in #{(t2-t1).round(5)}"
+
+				if (@probability_distribution.inject(0) { |memo,(k,v)| memo + v }.round(3).to_f != 1.0)
+					puts "Error in probability distrubtion."
+				end
 			end
-			t2 = Time.now
-			puts "Probabilities determined in #{(t2-t1).round(5)}"
-			
-			if (@probability_distribution.inject(0) { |memo,(k,v)| memo + v }.round(3).to_f != 1.0)
-				puts "Error in probability distrubtion."
-			end
-			
 		end
 
 		def max
@@ -83,6 +86,18 @@ module Dice_Stats
 
 		def print_probability
 			@probability_distribution.each { |k,v| puts "p(#{k}) => #{v.round(8).to_f}"}
+		end
+
+		def roll
+			@dice.inject(@constant || 0) { |memo,d| memo + d.roll }
+		end
+
+		def p(val)
+			if (@probability_distribution.key?(val))
+				return @probability_distribution[val]
+			else
+				return 0
+			end
 		end
 
 	end
