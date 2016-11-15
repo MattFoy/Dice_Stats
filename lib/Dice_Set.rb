@@ -93,11 +93,29 @@ module Dice_Stats
 		end
 
 		def p(val)
-			if (@probability_distribution.key?(val))
-				return @probability_distribution[val]
-			else
-				return 0
-			end
+			#Remove all spaces
+			val.gsub! ' ',''
+			conditions = {}
+
+			# Valid input:
+			# p("x > 5")
+			# p("x < 5")
+			# p("1 < x < 5")
+			# p("1 < x <= 5")
+			# p("5")
+			# p("<5")
+			# p(">=5")
+			# p("x=5")
+			# p("x == 5")
+			# p("x != 5")
+
+			#TODO
+			if /(\d+)(>|<|=|==|>=|<=|!=)\w+/.match(val)
+
+			elsif /\w*(>|<|=|==|>=|<=)(\d+)/.match(val)
+
+			elsif 
+				
 		end
 
 	end
