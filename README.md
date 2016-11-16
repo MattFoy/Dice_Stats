@@ -101,5 +101,6 @@ I've created a similar program before in C#, so I was already familiar with the 
 
 ## Todo:
 
-1. Add "Or" groupings for queries
-2. See if the n-ary cartesian product process can be simplified.
+1. Create a Rails app that wraps this gem for ease of use and visualization. Also to learn Rails!
+2. Add "Or" groupings for queries
+3. See if the n-ary cartesian product process can be simplified.
