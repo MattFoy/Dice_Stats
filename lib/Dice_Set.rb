@@ -1,5 +1,7 @@
 require 'Dice'
-require 'Math_Utilities'
+require 'Internal_Utilities/Math_Utilities'
+require 'Internal_Utilities/Filtered_distribution'
+require 'Internal_Utilities/probability_cache_db'
 
 module Dice_Stats
 	class Dice_Set
@@ -36,13 +38,13 @@ module Dice_Stats
 					@probability_distribution = Cache.getDice(self.clean_string(false))
 				else
 					@probability_distribution = combine_probability_distributions
-					Cache.addDice(self.clean_string(false), @probability_distribution)
+					Cache.addDice(self.clean_string(false), @probability_distribution, (Time.now - t1).round(5))
 				end
 				t2 = Time.now
 				puts "Probabilities determined in #{(t2-t1).round(5)}"
 
 				if (@probability_distribution.inject(0) { |memo,(k,v)| memo + v }.round(3).to_f != 1.0)
-					puts "Error in probability distrubtion."
+					#puts "Error in probability distrubtion."
 				end
 			end
 		end
@@ -69,7 +71,7 @@ module Dice_Stats
 
 		def combine_probability_distributions
 			separate_distributions = @dice.map { |d| d.probability_distribution }
-			Math_Utilities.Cartesian_Product_For_Probabilities(separate_distributions)
+			Internal_Utilities::Math_Utilities.Cartesian_Product_For_Probabilities(separate_distributions)
 		end
 
 		def clean_string(with_constant=true)
@@ -93,10 +95,10 @@ module Dice_Stats
 		end
 
 		def p
-			puts "Why..."
-			print "1234567890"
-			#filtered_distribution = InternalUtilities::Filtered_distribution.new(@probability_distribution)
-			#return filtered_distribution
+			#Interestingly, if I don't .clone the hash it doesn't actually create a new instance. VERY peculiar!
+			filtered_distribution = Internal_Utilities::Filtered_distribution.new(@probability_distribution.clone)
+
+			return filtered_distribution
 		end
 	end
 end

@@ -1,5 +1,6 @@
 require 'bigdecimal'
-require 'probability_cache_db'
+require 'Internal_Utilities/Math_Utilities'
+require 'Internal_Utilities/probability_cache_db'
 
 module Dice_Stats
 	class Dice
@@ -85,8 +86,8 @@ module Dice_Stats
 					c = BigDecimal.new(0)
 					((0..thing).each { |k|
 						n1 = ((-1)**k) 
-						n2 = BigDecimal.new(Math_Utilities.Choose(@count, k))
-						n3 = BigDecimal.new(Math_Utilities.Choose(p - (@sides * k) - 1, @count - 1))						
+						n2 = BigDecimal.new(Internal_Utilities::Math_Utilities.Choose(@count, k))
+						n3 = BigDecimal.new(Internal_Utilities::Math_Utilities.Choose(p - (@sides * k) - 1, @count - 1))						
 						t = BigDecimal.new(n1 * n2 * n3)
 
 						c += t

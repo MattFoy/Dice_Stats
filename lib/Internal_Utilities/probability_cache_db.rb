@@ -1,9 +1,13 @@
 require 'sqlite3'
 require 'bigdecimal'
 
+module Dice_Stats
+
+end
+
 module Dice_Stats::Internal_Utilities
 	class DB_cache_connection
-		@@Version = [0, 0, 3]
+		@@Version = [0, 0, 4]
 		@@Path = '/srv/Dice_Stats/'
 		@@DB_name = 'probability_cache.db'
 
@@ -43,7 +47,7 @@ module Dice_Stats::Internal_Utilities
 
 		def createSchema(db, drop=false)
 			db.execute "DROP TABLE IF EXISTS DiceSet;" if drop
-			db.execute "CREATE TABLE IF NOT EXISTS DiceSet (Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT UNIQUE)"
+			db.execute "CREATE TABLE IF NOT EXISTS DiceSet (Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT UNIQUE, TimeElapsed DECIMAL)"
 
 			db.execute "DROP TABLE IF EXISTS RollProbability;" if drop
 			db.execute "CREATE TABLE IF NOT EXISTS RollProbability (Id INTEGER PRIMARY KEY AUTOINCREMENT, DiceSetId INT, Value INTEGER, Probability DECIMAL)"
@@ -77,7 +81,7 @@ module Dice_Stats::Internal_Utilities
 			end
 		end
 
-		def addDice(dice_pattern, probability_distribution)
+		def addDice(dice_pattern, probability_distribution, timeElapsed=0.0)
 			begin
 				db = SQLite3::Database.open(@@Path + @@DB_name)				
 				db.execute "INSERT INTO DiceSet (Name) VALUES ('#{dice_pattern}')"
@@ -92,8 +96,7 @@ module Dice_Stats::Internal_Utilities
 
 				insert = "INSERT INTO RollProbability (DiceSetId, Value, Probability) VALUES " + values.join(", ")
 
-				db.execute insert		
-
+				db.execute insert
 			rescue SQLite3::Exception => e 
 				puts e
 			ensure
@@ -123,6 +126,31 @@ module Dice_Stats::Internal_Utilities
 			ensure
 				statement1.close if statement1
 				statement2.close if statement2
+				db.close if db
+			end
+		end
+
+		def getElapsed(dice_pattern)
+			begin
+				db = SQLite3::Database.open(@@Path + @@DB_name)
+				statement = db.prepare "SELECT TimeElapsed FROM DiceSet WHERE Name = '#{dice_pattern}'"
+
+				rs = statement.execute				
+				result = nil
+				rs.each { |row| 
+					result = row[0]
+				}
+
+				if (result == nil)
+					return 0.0
+				else 
+					return result
+				end
+
+			rescue SQLite3::Exception => e 
+				puts e
+			ensure
+				statement.close if statement
 				db.close if db
 			end
 		end
