@@ -95,9 +95,8 @@ module Dice_Stats
 		end
 
 		def p
-			#Interestingly, if I don't .clone the hash it doesn't actually create a new instance. VERY peculiar!
-			filtered_distribution = Internal_Utilities::Filtered_distribution.new(@probability_distribution.clone)
-
+			weighted_prob_dist = @probability_distribution.inject(Hash.new) { |m,(k,v)| m[k+@constant] = v; m }
+			filtered_distribution = Internal_Utilities::Filtered_distribution.new(weighted_prob_dist)
 			return filtered_distribution
 		end
 	end
