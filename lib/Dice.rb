@@ -8,9 +8,18 @@ module Dice_Stats
 	# This class repsents the roll statistics for a single type of dice. i.e. all d6s, or all d8s.
 	# The probability distribution is generated via the generating function found on line (10) of http://mathworld.wolfram.com/Dice.html
 	class Dice
+
+		##
+		# The number of dice, and how many sides they have.
 		attr_accessor :count, :sides
+
+		##
+		# The probability distribution of the dice.
 		attr_reader :probability_distribution
 
+		##
+		# Creates a new Dice instance of a number of dice (+dice_count+) with +dice_sides+ faces.
+		# All dice are assumed to go from 1 to +dice_sides+.
 		def initialize(dice_count, dice_sides)
 			@count = dice_count
 			@sides = dice_sides
@@ -31,18 +40,26 @@ module Dice_Stats
 			end
 		end
 
+		##
+		# Returns the highest possible roll
 		def max
 			@count*@sides
 		end
 
+		## 
+		# Returns the lowest possible roll
 		def min
 			@count
 		end
 
+		## 
+		# Returns the average roll result
 		def expected
 			BigDecimal(@count) * ((@sides + 1.0) / 2.0)
 		end
 
+		##
+		# Returns the variance of the roll
 		def variance
 			var = BigDecimal.new(0)
 			(1..@sides).each { |i|
@@ -52,10 +69,14 @@ module Dice_Stats
 			var * BigDecimal.new(@count)
 		end
 
+		##
+		# Returns the standard deviation of the roll
 		def standard_deviation
 			BigDecimal.new(variance).sqrt(5)
 		end
 
+		##
+		# Prints some basic stats about this roll
 		def print_stats
 			puts "Min: #{min}"
 			puts "Max: #{max}"
@@ -68,6 +89,8 @@ module Dice_Stats
 			}
 		end
 
+		##
+		# Rolls the dice and returns the result
 		def roll
 			sum = 0
 			@count.times do |i|
@@ -76,6 +99,9 @@ module Dice_Stats
 			return sum
 		end
 
+		##
+		# For internal use only.
+		# Caclulates the probability distribution on initialization
 		def calculate_probability_distribution
 			number_of_possible_combinations = (@sides**@count)
 			#puts "Number of possible combinations: #{number_of_possible_combinations}"
@@ -108,6 +134,8 @@ module Dice_Stats
 			#puts "Sum of probability_distribution: " + (@probability_distribution.inject(BigDecimal.new(0)) {|total, (k,v)| BigDecimal.new(total + v) }).add(0, 5).to_s('F')
 		end
 
+		##
+		# Returns the probability of a specific result (+val+). *Not* to be confused with Dice_Set#p.
 		def p(val)
 			if (@probability_distribution.key?(val))
 				return @probability_distribution[val]

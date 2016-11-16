@@ -58,7 +58,7 @@
   <h3>Parent</h3>
 
   
-  <p class="link"><a href="../../Object.html">Object</a>
+  <p class="link">Object
   
 </div>
 
@@ -133,7 +133,8 @@ the counter could hold.</p>
 
         <div class="method-description">
         
-        
+        <p>A boolean value representing if the result has overflown. Will be false
+initially, will be set to true if the counter ends up back at [0, 0, …, 0]</p>
         
         </div>
       </div>
@@ -169,7 +170,7 @@ counter of 3 base 2 digits, supply [2,2,2]</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/Internal_Utilities/Arbitrary_base_counter.rb, line 29</span>
+            <pre><span class="ruby-comment"># File lib/Internal_Utilities/Arbitrary_base_counter.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">maximums</span>)
         <span class="ruby-ivar">@overflow</span> = <span class="ruby-keyword">false</span>
         <span class="ruby-ivar">@index</span> = <span class="ruby-identifier">maximums</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> {<span class="ruby-value">:val</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>, <span class="ruby-value">:max</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">i</span>} }
@@ -212,7 +213,7 @@ digit place</p>
 
           
           <div class="method-source-code" id="5B-5D-source">
-            <pre><span class="ruby-comment"># File lib/Internal_Utilities/Arbitrary_base_counter.rb, line 72</span>
+            <pre><span class="ruby-comment"># File lib/Internal_Utilities/Arbitrary_base_counter.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">i</span>)
         <span class="ruby-ivar">@index</span>[<span class="ruby-identifier">i</span>][<span class="ruby-value">:val</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -245,7 +246,7 @@ digit place</p>
 
           
           <div class="method-source-code" id="increment-source">
-            <pre><span class="ruby-comment"># File lib/Internal_Utilities/Arbitrary_base_counter.rb, line 36</span>
+            <pre><span class="ruby-comment"># File lib/Internal_Utilities/Arbitrary_base_counter.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">increment</span>
         <span class="ruby-comment">#start at the end of the array (i.e. the &quot;lowest&quot; significant digit)</span>
         <span class="ruby-identifier">i</span> = <span class="ruby-ivar">@index</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span> 
@@ -301,7 +302,7 @@ digit place</p>
 
           
           <div class="method-source-code" id="length-source">
-            <pre><span class="ruby-comment"># File lib/Internal_Utilities/Arbitrary_base_counter.rb, line 65</span>
+            <pre><span class="ruby-comment"># File lib/Internal_Utilities/Arbitrary_base_counter.rb, line 68</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">length</span>
         <span class="ruby-ivar">@index</span>.<span class="ruby-identifier">length</span>
 <span class="ruby-keyword">end</span></pre>
@@ -334,7 +335,7 @@ digit place</p>
 
           
           <div class="method-source-code" id="print-source">
-            <pre><span class="ruby-comment"># File lib/Internal_Utilities/Arbitrary_base_counter.rb, line 78</span>
+            <pre><span class="ruby-comment"># File lib/Internal_Utilities/Arbitrary_base_counter.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@index</span>
 <span class="ruby-keyword">end</span></pre>

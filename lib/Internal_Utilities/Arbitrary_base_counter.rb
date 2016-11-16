@@ -20,6 +20,9 @@ module Dice_Stats::Internal_Utilities
 	# * Add a "value" method to return the count in base 10
 
 	class Arbitrary_base_counter
+		##
+		# A boolean value representing if the result has overflown.
+		# Will be false initially, will be set to true if the counter ends up back at [0, 0, ..., 0]
 		attr_reader :overflow
 
 		##

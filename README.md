@@ -101,6 +101,5 @@ I've created a similar program before in C#, so I was already familiar with the 
 
 ## Todo:
 
-1. Complete the RDocs
+1. Add "Or" groupings for queries
 2. See if the n-ary cartesian product process can be simplified.
-3. Add "Or" groupings for queries

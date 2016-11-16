@@ -58,7 +58,7 @@
   <h3>Parent</h3>
 
   
-  <p class="link"><a href="../Object.html">Object</a>
+  <p class="link">Object
   
 </div>
 
@@ -135,7 +135,7 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
         
-        
+        <p>The number of dice, and how many sides they have.</p>
         
         </div>
       </div>
@@ -148,7 +148,7 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
         
-        
+        <p>The probability distribution of the dice.</p>
         
         </div>
       </div>
@@ -161,7 +161,7 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
         
-        
+        <p>The number of dice, and how many sides they have.</p>
         
         </div>
       </div>
@@ -189,13 +189,15 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
           
-          
+          <p>Creates a new <a href="Dice.html">Dice</a> instance of a number of dice
+(<code>dice_count</code>) with <code>dice_sides</code> faces. All dice are
+assumed to go from 1 to <code>dice_sides</code>.</p>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 14</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">dice_count</span>, <span class="ruby-identifier">dice_sides</span>)
         <span class="ruby-ivar">@count</span> = <span class="ruby-identifier">dice_count</span>
         <span class="ruby-ivar">@sides</span> = <span class="ruby-identifier">dice_sides</span>
@@ -246,13 +248,14 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
           
-          
+          <p>For internal use only. Caclulates the probability distribution on
+initialization</p>
           
           
 
           
           <div class="method-source-code" id="calculate_probability_distribution-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 105</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">calculate_probability_distribution</span>
         <span class="ruby-identifier">number_of_possible_combinations</span> = (<span class="ruby-ivar">@sides</span><span class="ruby-operator">**</span><span class="ruby-ivar">@count</span>)
         <span class="ruby-comment">#puts &quot;Number of possible combinations: #{number_of_possible_combinations}&quot;</span>
@@ -307,13 +310,13 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
           
-          
+          <p>Returns the average roll result</p>
           
           
 
           
           <div class="method-source-code" id="expected-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 42</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">expected</span>
         <span class="ruby-constant">BigDecimal</span>(<span class="ruby-ivar">@count</span>) <span class="ruby-operator">*</span> ((<span class="ruby-ivar">@sides</span> <span class="ruby-operator">+</span> <span class="ruby-value">1.0</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2.0</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -340,13 +343,13 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
           
-          
+          <p>Returns the highest possible roll</p>
           
           
 
           
           <div class="method-source-code" id="max-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 34</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">max</span>
         <span class="ruby-ivar">@count</span><span class="ruby-operator">*</span><span class="ruby-ivar">@sides</span>
 <span class="ruby-keyword">end</span></pre>
@@ -373,13 +376,13 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
           
-          
+          <p>Returns the lowest possible roll</p>
           
           
 
           
           <div class="method-source-code" id="min-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 38</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 51</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">min</span>
         <span class="ruby-ivar">@count</span>
 <span class="ruby-keyword">end</span></pre>
@@ -406,13 +409,15 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
           
-          
+          <p>Returns the probability of a specific result (<code>val</code>).
+<strong>Not</strong> to be confused with <a
+href="Dice_Set.html#method-i-p">Dice_Stats::Dice_Set#p</a>.</p>
           
           
 
           
           <div class="method-source-code" id="p-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 111</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 139</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">p</span>(<span class="ruby-identifier">val</span>)
         <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@probability_distribution</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">val</span>))
                 <span class="ruby-keyword">return</span> <span class="ruby-ivar">@probability_distribution</span>[<span class="ruby-identifier">val</span>]
@@ -443,13 +448,13 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
           
-          
+          <p>Prints some basic stats about this roll</p>
           
           
 
           
           <div class="method-source-code" id="print_stats-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 59</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 80</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_stats</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Min: #{min}&quot;</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Max: #{max}&quot;</span>
@@ -484,13 +489,13 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
           
-          
+          <p>Rolls the dice and returns the result</p>
           
           
 
           
           <div class="method-source-code" id="roll-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 71</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 94</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">roll</span>
         <span class="ruby-identifier">sum</span> = <span class="ruby-value">0</span>
         <span class="ruby-ivar">@count</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
@@ -521,13 +526,13 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
           
-          
+          <p>Returns the standard deviation of the roll</p>
           
           
 
           
           <div class="method-source-code" id="standard_deviation-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 55</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 74</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">standard_deviation</span>
         <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">variance</span>).<span class="ruby-identifier">sqrt</span>(<span class="ruby-value">5</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -554,13 +559,13 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
 
         <div class="method-description">
           
-          
+          <p>Returns the variance of the roll</p>
           
           
 
           
           <div class="method-source-code" id="variance-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 46</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">variance</span>
         <span class="ruby-identifier">var</span> = <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>)
         (<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-ivar">@sides</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
