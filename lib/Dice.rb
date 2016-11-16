@@ -20,10 +20,10 @@ module Dice_Stats
 					@probability_distribution = Cache.getDice(@count.to_s + "d" + @sides.to_s)
 				else
 					@probability_distribution = calculate_probability_distribution
-					Cache.addDice(@count.to_s + "d" + @sides.to_s, @probability_distribution)
+					Cache.addDice(@count.to_s + "d" + @sides.to_s, @probability_distribution, (Time.now - t1).round(5))
 				end
-				t2 = Time.now
-				puts "Probabilities determined in #{(t2-t1).round(5)}"
+				#t2 = Time.now
+				#puts "Probabilities determined in #{(t2-t1).round(5)}"
 			end
 		end
 

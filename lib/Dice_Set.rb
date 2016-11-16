@@ -28,7 +28,8 @@ module Dice_Stats
 				end
 			}
 
-			if @dice.inject(0) { |memo,d| memo * d.count * d.sides } > 100
+			if @dice.inject(1) { |memo,d| memo * d.probability_distribution.length } > 10_000_000
+				# if the n-ary cartesian product has to process more than 10,000,000 combinations it can take quite a while to finish...
 				puts "Too complex"
 			else
 				@dice.sort! { |d1,d2| d2.sides <=> d1.sides }

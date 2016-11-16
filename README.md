@@ -4,7 +4,7 @@ A ruby gem for handling dice related statistics.
 ##Usage
 
 ###Instantiating and rolling:
-```
+```ruby
 $ irb -r dice_stats --simple-prompt
 >> ds = Dice_Stats::Dice_Set.new("1d6 + 3 + 2d8")
 
@@ -24,7 +24,7 @@ $ irb -r dice_stats --simple-prompt
 ```
 
 Simple statistics:
-```
+```ruby
 >> # Basic statistical information about the set of dice can also be returned
 >> ds.expected
 => 15.5
@@ -43,9 +43,12 @@ Simple statistics:
 ```
 
 Advanced statistics:
-```
->> # More advanced queries can be performed on the dice set. Results will be returned as BigDecimals. 
->> # These examples will change them to floats for readability.
+```ruby
+>> # More advanced queries can be performed on the dice set. Results are returned as BigDecimals. 
+>> # For readability, these examples will round and change them to floats.
+>> # Queries are conducted with the p method, clauses are cumulative (all implicitly joined with "AND")
+
+>> # p(x = 12)
 >> ds1.p.eq(12).get.round(8).to_f
 => 0.0703125
 
