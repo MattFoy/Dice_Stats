@@ -117,8 +117,8 @@ module Dice_Stats::Internal_Utilities
 				probability_distribution.each { |k,v|  
 					values << "(#{diceset_id}, #{k}, #{v})"
 				}
-				puts "Values:"
-				puts values
+				#puts "Values:"
+				#puts values
 
 				insert = "INSERT INTO RollProbability (DiceSetId, Value, Probability) VALUES " + values.join(", ")
 

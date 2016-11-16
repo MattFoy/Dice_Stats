@@ -195,8 +195,8 @@ Storing them drastically increases performance when a cache hit is found.</p>
                 <span class="ruby-identifier">probability_distribution</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>  
                         <span class="ruby-identifier">values</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;(#{diceset_id}, #{k}, #{v})&quot;</span>
                 }
-                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Values:&quot;</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-identifier">values</span>
+                <span class="ruby-comment">#puts &quot;Values:&quot;</span>
+                <span class="ruby-comment">#puts values</span>
 
                 <span class="ruby-identifier">insert</span> = <span class="ruby-string">&quot;INSERT INTO RollProbability (DiceSetId, Value, Probability) VALUES &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">values</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;, &quot;</span>)
 

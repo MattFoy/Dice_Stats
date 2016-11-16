@@ -219,8 +219,8 @@ interactively through <a href="Dice_Set.html#method-i-p">#p</a>.</p>
                         <span class="ruby-ivar">@probability_distribution</span> = <span class="ruby-identifier">combine_probability_distributions</span>
                         <span class="ruby-constant">Cache</span>.<span class="ruby-identifier">addDice</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">clean_string</span>(<span class="ruby-keyword">false</span>), <span class="ruby-ivar">@probability_distribution</span>, (<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">t1</span>).<span class="ruby-identifier">round</span>(<span class="ruby-value">5</span>))
                 <span class="ruby-keyword">end</span>
-                <span class="ruby-identifier">t2</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Probabilities determined in #{(t2-t1).round(5)}&quot;</span>
+                <span class="ruby-comment">#t2 = Time.now</span>
+                <span class="ruby-comment">#puts &quot;Probabilities determined in #{(t2-t1).round(5)}&quot;</span>
 
                 <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@probability_distribution</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">memo</span>,(<span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span>)<span class="ruby-operator">|</span> <span class="ruby-identifier">memo</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">v</span> }.<span class="ruby-identifier">round</span>(<span class="ruby-value">3</span>).<span class="ruby-identifier">to_f</span> <span class="ruby-operator">!=</span> <span class="ruby-value">1.0</span>)
                         <span class="ruby-comment">#puts &quot;Error in probability distrubtion.&quot;</span>

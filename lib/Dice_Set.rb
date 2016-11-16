@@ -58,8 +58,8 @@ module Dice_Stats
 					@probability_distribution = combine_probability_distributions
 					Cache.addDice(self.clean_string(false), @probability_distribution, (Time.now - t1).round(5))
 				end
-				t2 = Time.now
-				puts "Probabilities determined in #{(t2-t1).round(5)}"
+				#t2 = Time.now
+				#puts "Probabilities determined in #{(t2-t1).round(5)}"
 
 				if (@probability_distribution.inject(0) { |memo,(k,v)| memo + v }.round(3).to_f != 1.0)
 					#puts "Error in probability distrubtion."
