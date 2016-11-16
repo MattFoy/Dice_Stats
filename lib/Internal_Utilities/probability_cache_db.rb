@@ -6,15 +6,32 @@ module Dice_Stats
 end
 
 module Dice_Stats::Internal_Utilities
+
+	##
+	# This class represents the cache. The cache is used for storing previously calculated results.
+	# Some dice sets can take quite a while to calculate. 
+	# Storing them drastically increases performance when a cache hit is found.
 	class DB_cache_connection
+		##
+		# The version of the gem. If this is updated, the DB_cache_connection#initialize method will drop and recreate the tables
 		@@Version = [0, 0, 4]
+
+		##
+		# The path of the sqlite3 db file.
 		@@Path = '/srv/Dice_Stats/'
+
+		##
+		# The name of the sqlite3 db file.
 		@@DB_name = 'probability_cache.db'
 
+		##
+		# For internal use only. Checks the database version and schema on startup.
 		def initialize
 			checkSchema
 		end
 
+		##
+		# Checks the database version and schema and creates the table structures.
 		def checkSchema
 			begin
 				db = SQLite3::Database.open(@@Path + @@DB_name)
@@ -45,6 +62,9 @@ module Dice_Stats::Internal_Utilities
 
 		end
 
+		##
+		# Creates the tables if they don't already exist.
+		# If +drop+ is set to true, the tables will be dropped first.
 		def createSchema(db, drop=false)
 			db.execute "DROP TABLE IF EXISTS DiceSet;" if drop
 			db.execute "CREATE TABLE IF NOT EXISTS DiceSet (Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT UNIQUE, TimeElapsed DECIMAL)"
@@ -53,6 +73,8 @@ module Dice_Stats::Internal_Utilities
 			db.execute "CREATE TABLE IF NOT EXISTS RollProbability (Id INTEGER PRIMARY KEY AUTOINCREMENT, DiceSetId INT, Value INTEGER, Probability DECIMAL)"
 		end
 
+		##
+		# Drops and recreates the schema for the purpose of clearing the cache.
 		def purge
 			begin
 				db = SQLite3::Database.open(@@Path + @@DB_name)
@@ -65,6 +87,8 @@ module Dice_Stats::Internal_Utilities
 			end
 		end
 
+		##
+		# Checks the cache to see if the pattern has been previously calculated.
 		def checkDice(dice_pattern)
 			begin
 				db = SQLite3::Database.open(@@Path + @@DB_name)
@@ -81,6 +105,8 @@ module Dice_Stats::Internal_Utilities
 			end
 		end
 
+		##
+		# Caches a dice pattern for future retrieval.
 		def addDice(dice_pattern, probability_distribution, timeElapsed=0.0)
 			begin
 				db = SQLite3::Database.open(@@Path + @@DB_name)				
@@ -104,6 +130,8 @@ module Dice_Stats::Internal_Utilities
 			end
 		end
 
+		##
+		# Retrieves the probability distribution for a dice pattern from the cache.
 		def getDice(dice_pattern)
 			begin
 				db = SQLite3::Database.open(@@Path + @@DB_name)
@@ -130,6 +158,8 @@ module Dice_Stats::Internal_Utilities
 			end
 		end
 
+		##
+		# Retrieves how long a cached result originally took to calculate.
 		def getElapsed(dice_pattern)
 			begin
 				db = SQLite3::Database.open(@@Path + @@DB_name)

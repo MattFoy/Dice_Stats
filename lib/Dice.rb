@@ -3,6 +3,10 @@ require 'Internal_Utilities/Math_Utilities'
 require 'Internal_Utilities/probability_cache_db'
 
 module Dice_Stats
+
+	##
+	# This class repsents the roll statistics for a single type of dice. i.e. all d6s, or all d8s.
+	# The probability distribution is generated via the generating function found on line (10) of http://mathworld.wolfram.com/Dice.html
 	class Dice
 		attr_accessor :count, :sides
 		attr_reader :probability_distribution

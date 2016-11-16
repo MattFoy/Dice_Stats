@@ -80,6 +80,7 @@ Queries are conducted with the p method, clauses are cumulative (all implicitly 
 => 0.97916667
 ```
 
+
 ## How it works:
 
 Each single type of dice is broken out separately at first, so in the case of "2d6 + 3d8" first "2d6" and "3d8" are each considered.
@@ -96,3 +97,10 @@ The next step is to determine the combined probability distribution. This is a l
 I wanted to learn Ruby; this is my "Hello World!". 
 
 I've created a similar program before in C#, so I was already familiar with the core concepts.
+
+
+## Todo:
+
+1. Complete the RDocs
+2. See if the n-ary cartesian product process can be simplified.
+3. Add "Or" groupings for queries

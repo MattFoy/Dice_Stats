@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>README - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+  <ul class="link-list" role="directory">
+    <li><a href="#label-Dice_Stats">Dice_Stats</a>
+    <li><a href="#label-Usage">Usage</a>
+    <li><a href="#label-Instantiating+and+rolling-3A">Instantiating and rolling:</a>
+    <li><a href="#label-Simple+statistics-3A">Simple statistics:</a>
+    <li><a href="#label-Advanced+statistics-3A">Advanced statistics:</a>
+    <li><a href="#label-How+it+works-3A">How it works:</a>
+    <li><a href="#label-Why-3A">Why:</a>
+    <li><a href="#label-Todo-3A">Todo:</a>
+  </ul>
+</div>
+
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./README_md.html">README</a>
+  
+    <li><a href="./dice_stats_gemspec.html">dice_stats.gemspec</a>
+  
+    <li><a href="./test_sh.html">test.sh</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page README.md">
+
+<h1 id="label-Dice_Stats"><a href="Dice_Stats.html">Dice_Stats</a><span><a href="#label-Dice_Stats">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<p>A ruby gem for handling dice related statistics.</p>
+
+<h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<h3 id="label-Instantiating+and+rolling-3A">Instantiating and rolling:<span><a href="#label-Instantiating+and+rolling-3A">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre class="ruby">$ <span class="ruby-identifier">irb</span> <span class="ruby-operator">-</span><span class="ruby-identifier">r</span> <span class="ruby-identifier">dice_stats</span> <span class="ruby-operator">-</span><span class="ruby-operator">-</span><span class="ruby-identifier">simple</span><span class="ruby-operator">-</span><span class="ruby-identifier">prompt</span>
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds</span> = <span class="ruby-constant">Dice_Stats</span><span class="ruby-operator">::</span><span class="ruby-constant">Dice_Set</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;1d6 + 3 + 2d8&quot;</span>)
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-comment"># clean_string returns the input pattern, sorted by dice face in descending order</span>
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds</span>.<span class="ruby-identifier">clean_string</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;2d8 + 1d6 + 3&quot;</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-comment"># roll simulates a roll of the specified dice</span>
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds</span>.<span class="ruby-identifier">roll</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">13</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds</span>.<span class="ruby-identifier">roll</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">17</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds</span>.<span class="ruby-identifier">roll</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">11</span>
+</pre>
+
+<h3 id="label-Simple+statistics-3A">Simple statistics:<span><a href="#label-Simple+statistics-3A">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Basic statistical information about the set of dice can also be returned
+through class methods.</p>
+
+<pre class="ruby"><span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds</span>.<span class="ruby-identifier">expected</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">15.5</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds1</span>.<span class="ruby-identifier">variance</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">13.4166666667</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds1</span>.<span class="ruby-identifier">standard_deviation</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">3.6628768298</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds1</span>.<span class="ruby-identifier">min</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">6</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds1</span>.<span class="ruby-identifier">max</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">25</span>
+</pre>
+
+<h3 id="label-Advanced+statistics-3A">Advanced statistics:<span><a href="#label-Advanced+statistics-3A">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>More advanced queries can be performed on the dice set. Results are
+returned as BigDecimals. For readability, these examples will round and
+change them to floats. Queries are conducted with the p method, clauses are
+cumulative (all implicitly joined with “AND”)</p>
+
+<pre class="ruby"><span class="ruby-operator">&gt;&gt;</span> <span class="ruby-comment"># p(x = 12)</span>
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds1</span>.<span class="ruby-identifier">p</span>.<span class="ruby-identifier">eq</span>(<span class="ruby-value">12</span>).<span class="ruby-identifier">get</span>.<span class="ruby-identifier">round</span>(<span class="ruby-value">8</span>).<span class="ruby-identifier">to_f</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">0.0703125</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-comment"># p(15 &lt; x &lt; 20)</span>
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds1</span>.<span class="ruby-identifier">p</span>.<span class="ruby-identifier">gt</span>(<span class="ruby-value">15</span>).<span class="ruby-identifier">lt</span>(<span class="ruby-value">20</span>).<span class="ruby-identifier">get</span>.<span class="ruby-identifier">round</span>(<span class="ruby-value">8</span>).<span class="ruby-identifier">to_f</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">0.35416667</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-comment"># p(x &gt; 15)</span>
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds1</span>.<span class="ruby-identifier">p</span>.<span class="ruby-identifier">gt</span>(<span class="ruby-value">15</span>).<span class="ruby-identifier">get</span>.<span class="ruby-identifier">round</span>(<span class="ruby-value">8</span>).<span class="ruby-identifier">to_f</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">0.5</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-comment"># p(x &lt;= 15)</span>
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds1</span>.<span class="ruby-identifier">p</span>.<span class="ruby-identifier">lte</span>(<span class="ruby-value">15</span>).<span class="ruby-identifier">get</span>.<span class="ruby-identifier">round</span>(<span class="ruby-value">8</span>).<span class="ruby-identifier">to_f</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">0.5</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-comment"># p(12 &lt;= x &lt;= 19)</span>
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds1</span>.<span class="ruby-identifier">p</span>.<span class="ruby-identifier">gte</span>(<span class="ruby-value">12</span>).<span class="ruby-identifier">lte</span>(<span class="ruby-value">19</span>).<span class="ruby-identifier">get</span>.<span class="ruby-identifier">round</span>(<span class="ruby-value">8</span>).<span class="ruby-identifier">to_f</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">0.70833333</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-comment"># p(12 &lt; x &lt; 19)</span>
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds1</span>.<span class="ruby-identifier">p</span>.<span class="ruby-identifier">gt</span>(<span class="ruby-value">12</span>).<span class="ruby-identifier">lt</span>(<span class="ruby-value">19</span>).<span class="ruby-identifier">get</span>.<span class="ruby-identifier">round</span>(<span class="ruby-value">8</span>).<span class="ruby-identifier">to_f</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">0.56770833</span>
+
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-comment"># p(x != 25,24,6,7) i.e. not the two highest or two lowest results</span>
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">ds1</span>.<span class="ruby-identifier">p</span>.<span class="ruby-identifier">ne</span>(<span class="ruby-value">25</span>).<span class="ruby-identifier">ne</span>(<span class="ruby-value">24</span>).<span class="ruby-identifier">ne</span>(<span class="ruby-value">6</span>).<span class="ruby-identifier">ne</span>(<span class="ruby-value">7</span>).<span class="ruby-identifier">get</span>.<span class="ruby-identifier">round</span>(<span class="ruby-value">8</span>).<span class="ruby-identifier">to_f</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-value">0.97916667</span>
+</pre>
+
+<h2 id="label-How+it+works-3A">How it works:<span><a href="#label-How+it+works-3A">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Each single type of dice is broken out separately at first, so in the case
+of “2d6 + 3d8” first “2d6” and “3d8” are each considered.</p>
+
+<p>The probability distribution for any number of a single type of dice can be
+calculated by using a generating function. Wolfram has an excellent article
+explaining this here: [<a
+href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a>]
+The key equation is on line (10).</p>
+
+<p>The next step is to determine the combined probability distribution. This
+is a little trickier, but is done by taking the Cartesian product of the
+probability distributions of the separate dice types. The real challenge is
+taking the Cartesian product of an unknown number of sets, for example
+maybe it is just the two “d8”s and “d6”s, but it could also be many more,
+ie. “2d20 + 2d12 + 2d10 + 2d8 + 2d6 + 2d4”. This means some nested loops
+are out of the question. I solve this by creating a counter that ticks up
+for each possible combination. It may not be the most elegant solution, but
+it works nicely.</p>
+
+<h2 id="label-Why-3A">Why:<span><a href="#label-Why-3A">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>I wanted to learn Ruby; this is my “Hello World!”.</p>
+
+<p>I&#39;ve created a similar program before in C#, so I was already familiar
+with the core concepts.</p>
+
+<h2 id="label-Todo-3A">Todo:<span><a href="#label-Todo-3A">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<ol><li>
+<p>Complete the RDocs</p>
+</li><li>
+<p>See if the n-ary cartesian product process can be simplified.</p>
+</li><li>
+<p>Add “Or” groupings for queries</p>
+</li></ol>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

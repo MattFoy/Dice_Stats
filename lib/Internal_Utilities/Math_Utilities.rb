@@ -5,7 +5,13 @@ module Dice_Stats
 end
 
 module Dice_Stats::Internal_Utilities
+
+	##
+	# This class simple contains some methods to aid the calculating of probability distributions
 	class Math_Utilities
+
+		##
+		# The "Choose" operator. Sometimes noted as "(5 3)" or "5 c 3".
 		def self.Choose(a, b)
 			if (a < 0 || b < 0 || (a < b))
 				1
@@ -16,12 +22,15 @@ module Dice_Stats::Internal_Utilities
 			end
 		end
 
+		##
+		# The "Factorial" function
 		def self.Factorial(a)
 			(1..a).inject(:*) || 0
 		end
 
-		## Note that this method is not actually used. It was a proof of concept for templating a less "clever" way to do a
-		## Cartesian product of arbitrary objects in such a way that additional processing can be done on the elements.
+		##
+		# Note that this method is not actually used. It was a proof of concept for templating a less "clever" way to do a
+		# Cartesian product of arbitrary objects in such a way that additional processing can be done on the elements.
 		def self.Cartesian_Product(arrays) #arrays is an array of array to cartesian product
 
 			# FROM https://gist.github.com/sepastian/6904643
@@ -61,6 +70,8 @@ module Dice_Stats::Internal_Utilities
 			result
 		end
 
+		##
+		# This method combines an array of hashes (i.e. an array of probabilities) into an aggregate probability distribution
 		def self.Cartesian_Product_For_Probabilities(hashes) #hashes is a hash of hashes to cartesian product
 			result = {}
 
@@ -100,6 +111,10 @@ module Dice_Stats::Internal_Utilities
 			result
 		end
 
+		##
+		# Deprecated / incomplete.
+		# This method runs some quick tests on the basic math helper functions 
+		# to make sure that the Factorial and Choose methods are working as expected.
 		def self.Test_Suite
 			#Choose
 			puts "Testing Choose edge cases..."
@@ -132,6 +147,8 @@ module Dice_Stats::Internal_Utilities
 			Test_Factorial(2, 2)
 		end
 
+		##
+		# Helper function for testing the Choose method.
 		def self.Test_Choose(a, b, expected)
 			puts "(#{a} #{b}) => #{expected} (Actual: " + self.Choose(a, b).to_s + ")"
 			if (self.Choose(a, b) != expected) 
@@ -139,6 +156,7 @@ module Dice_Stats::Internal_Utilities
 			end
 		end
 
+		## Helper function for testing the Factorial method.
 		def self.Test_Factorial(a, expected)
 			puts "#{a}! => #{expected} (Actual: " + self.Factorial(a).to_s + ")"
 			if (self.Factorial(a) != expected) 

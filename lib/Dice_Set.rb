@@ -4,6 +4,10 @@ require 'Internal_Utilities/Filtered_distribution'
 require 'Internal_Utilities/probability_cache_db'
 
 module Dice_Stats
+
+	##
+	# This class represents the roll statistics for a combination of dice.
+	# The probability distribution is based off the constituent dice distributions.
 	class Dice_Set
 		attr_reader :probability_distribution
 		attr_accessor :dice
