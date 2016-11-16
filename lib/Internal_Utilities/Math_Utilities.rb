@@ -20,7 +20,21 @@ module Dice_Stats::Internal_Utilities
 			(1..a).inject(:*) || 0
 		end
 
+		## Note that this method is not actually used. It was a proof of concept for templating a less "clever" way to do a
+		## Cartesian product of arbitrary objects in such a way that additional processing can be done on the elements.
 		def self.Cartesian_Product(arrays) #arrays is an array of array to cartesian product
+
+			# FROM https://gist.github.com/sepastian/6904643
+			# I found these examples later, after creating Option 3.
+			# TODO: See if using these can be used to simplify the process.
+			#Option 1
+			arrays[0].product(*arrays[1..-1])
+			#Option 2
+			arrays[1..-1].inject(arrays[0]) { |m,v| m.product(v).map(&:flatten) }
+
+			#Option 3
+			# however, we need to actually perform additional logic on the specific combinations, 
+			# not just aggregate them into one giant array
 			result = []
 			if (arrays.class != [].class)
 				puts "Not an array"			
@@ -63,7 +77,6 @@ module Dice_Stats::Internal_Utilities
 			else
 				counter = Arbitrary_base_counter.new([*0..hashes.length-1].map { |i| hashes[i].length })
 				hashes.map! { |h| h.to_a }
-				set = 0
 
 				while !counter.overflow do
 					value = 0
@@ -74,7 +87,6 @@ module Dice_Stats::Internal_Utilities
 						value += hashes[i][counter[i]][0]
 						probability *= hashes[i][counter[i]][1]
 					}
-					set += 1
 					if (result.key?(value))
 						result[value] += probability
 					else
