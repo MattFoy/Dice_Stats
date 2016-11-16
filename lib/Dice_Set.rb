@@ -92,31 +92,11 @@ module Dice_Stats
 			@dice.inject(@constant || 0) { |memo,d| memo + d.roll }
 		end
 
-		def p(val)
-			#Remove all spaces
-			val.gsub! ' ',''
-			conditions = {}
-
-			# Valid input:
-			# p("x > 5")
-			# p("x < 5")
-			# p("1 < x < 5")
-			# p("1 < x <= 5")
-			# p("5")
-			# p("<5")
-			# p(">=5")
-			# p("x=5")
-			# p("x == 5")
-			# p("x != 5")
-
-			#TODO
-			if /(\d+)(>|<|=|==|>=|<=|!=)\w+/.match(val)
-
-			elsif /\w*(>|<|=|==|>=|<=)(\d+)/.match(val)
-
-			elsif 
-				
+		def p
+			puts "Why..."
+			print "1234567890"
+			#filtered_distribution = InternalUtilities::Filtered_distribution.new(@probability_distribution)
+			#return filtered_distribution
 		end
-
 	end
 end

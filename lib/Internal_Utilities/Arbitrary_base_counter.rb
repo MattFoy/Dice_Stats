@@ -1,4 +1,4 @@
-module Dice_Stats
+module Dice_Stats::Internal_Utilities
 	class Arbitrary_base_counter
 		attr_reader :overflow
 

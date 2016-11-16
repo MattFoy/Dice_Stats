@@ -1,7 +1,7 @@
 require 'sqlite3'
 require 'bigdecimal'
 
-module Dice_Stats
+module Dice_Stats::Internal_Utilities
 	class DB_cache_connection
 		@@Version = [0, 0, 3]
 		@@Path = '/srv/Dice_Stats/'
@@ -126,8 +126,5 @@ module Dice_Stats
 				db.close if db
 			end
 		end
-
-	end
-
-	Cache = DB_cache_connection.new
+	end	
 end
