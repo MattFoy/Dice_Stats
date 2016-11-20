@@ -14,7 +14,7 @@ module Dice_Stats::Internal_Utilities
 	class DB_cache_connection
 		##
 		# The version of the gem. If this is updated, the DB_cache_connection#initialize method will drop and recreate the tables
-		@@Version = [0, 0, 4]
+		@@Version = [0, 1, 0]
 
 		##
 		# The path of the sqlite3 db file.
