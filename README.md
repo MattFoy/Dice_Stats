@@ -91,6 +91,12 @@ The key equation is on line (10).
 
 The next step is to determine the combined probability distribution. This is a little trickier, but is done by taking the Cartesian product of the probability distributions of the separate dice types. The real challenge is taking the Cartesian product of an unknown number of sets, for example maybe it is just the two "d8"s and "d6"s, but it could also be many more, ie. "2d20 + 2d12 + 2d10 + 2d8 + 2d6 + 2d4". This means some nested loops are out of the question. I solve this by creating a counter that ticks up for each possible combination. It may not be the most elegant solution, but it works nicely.
 
+## How to get it:
+
+It's published on: https://rubygems.org/gems/dice_stats
+```bash
+gem install dice_stats
+```
 
 ## Why:
 
