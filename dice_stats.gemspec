@@ -11,4 +11,5 @@ Gem::Specification.new { |s|
   "lib/Internal_Utilities/Filtered_distribution.rb", "lib/Internal_Utilities/probability_cache_db.rb"]
   s.homepage    = 'http://matthewfoy.ca'
   s.license     = 'MIT'
+  s.add_development_dependency "rspec", "~> 3.5", ">= 3.5.0"
 }
