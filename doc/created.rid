@@ -1,12 +1,15 @@
-Sun, 20 Nov 2016 19:41:11 -0500
-./dice_stats.gemspec	Sun, 20 Nov 2016 16:56:34 -0500
-./README.md	Tue, 15 Nov 2016 23:31:32 -0500
-./dice_stats-0.1.0.gem	Sun, 20 Nov 2016 19:41:02 -0500
+Sun, 20 Nov 2016 22:19:14 -0500
+./dice_stats-0.1.1.gem	Sun, 20 Nov 2016 22:11:48 -0500
+./dice_stats.gemspec	Sun, 20 Nov 2016 22:08:46 -0500
+./README.md	Sun, 20 Nov 2016 21:52:41 -0500
+./spec/dice_set_spec.rb	Sun, 20 Nov 2016 21:47:04 -0500
+./spec/Math_Utilities_spec.rb	Sun, 20 Nov 2016 21:31:45 -0500
+./spec/spec_helper.rb	Sun, 20 Nov 2016 21:11:36 -0500
+./spec/Arbitrary_base_counter_spec.rb	Sun, 20 Nov 2016 21:26:35 -0500
 ./test.sh	Sun, 20 Nov 2016 17:00:10 -0500
-./lib/Dice_Set.rb	Sun, 20 Nov 2016 19:40:44 -0500
+./lib/Dice_Set.rb	Sun, 20 Nov 2016 22:08:46 -0500
 ./lib/Internal_Utilities/Arbitrary_base_counter.rb	Tue, 15 Nov 2016 23:14:30 -0500
-./lib/Internal_Utilities/probability_cache_db.rb	Sun, 20 Nov 2016 16:55:51 -0500
-./lib/Internal_Utilities/Math_Utilities.rb	Tue, 15 Nov 2016 22:54:30 -0500
+./lib/Internal_Utilities/Math_Utilities.rb	Sun, 20 Nov 2016 21:32:42 -0500
 ./lib/Internal_Utilities/Filtered_distribution.rb	Tue, 15 Nov 2016 22:46:58 -0500
-./lib/dice_stats.rb	Tue, 15 Nov 2016 23:19:54 -0500
-./lib/Dice.rb	Tue, 15 Nov 2016 23:13:29 -0500
+./lib/dice_stats.rb	Sun, 20 Nov 2016 22:08:46 -0500
+./lib/Dice.rb	Sun, 20 Nov 2016 22:08:46 -0500
