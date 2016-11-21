@@ -14,9 +14,3 @@ module Dice_Stats::Internal_Utilities
 end
 
 require 'Dice_Set'
-
-##
-# Instantiates the cache.
-# The cache is an instance of a DB_cache_connection in the Internal_Utilities module.
-# It is used to cache past results.
-Dice_Stats::Cache = Dice_Stats::Internal_Utilities::DB_cache_connection.new

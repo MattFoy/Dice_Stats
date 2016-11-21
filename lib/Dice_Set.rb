@@ -1,7 +1,6 @@
 require 'Dice'
 require 'Internal_Utilities/Math_Utilities'
 require 'Internal_Utilities/Filtered_distribution'
-require 'Internal_Utilities/probability_cache_db'
 
 module Dice_Stats
 
@@ -52,16 +51,8 @@ module Dice_Stats
 			else
 				@dice.sort! { |d1,d2| d2.sides <=> d1.sides }
 
-				t1 = Time.now
-				if Cache.checkDice(self.clean_string(false))
-					@probability_distribution = Cache.getDice(self.clean_string(false))
-				else
-					@probability_distribution = combine_probability_distributions
-					Cache.addDice(self.clean_string(false), @probability_distribution, (Time.now - t1).round(5))
-				end
-				#t2 = Time.now
-				#puts "Probabilities determined in #{(t2-t1).round(5)}"
-
+				@probability_distribution = combine_probability_distributions
+				
 				if (@probability_distribution.inject(0) { |memo,(k,v)| memo + v }.round(3).to_f != 1.0)
 					#puts "Error in probability distrubtion."
 				end

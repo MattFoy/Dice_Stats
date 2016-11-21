@@ -1,6 +1,5 @@
 require 'bigdecimal'
 require 'Internal_Utilities/Math_Utilities'
-require 'Internal_Utilities/probability_cache_db'
 
 module Dice_Stats
 
@@ -28,15 +27,7 @@ module Dice_Stats
 			if (@count < 0 || @sides < 0)
 				#error
 			else
-				t1 = Time.now
-				if Cache.checkDice(@count.to_s + "d" + @sides.to_s)
-					@probability_distribution = Cache.getDice(@count.to_s + "d" + @sides.to_s)
-				else
-					@probability_distribution = calculate_probability_distribution
-					Cache.addDice(@count.to_s + "d" + @sides.to_s, @probability_distribution, (Time.now - t1).round(5))
-				end
-				#t2 = Time.now
-				#puts "Probabilities determined in #{(t2-t1).round(5)}"
+				@probability_distribution = calculate_probability_distribution
 			end
 		end
 
