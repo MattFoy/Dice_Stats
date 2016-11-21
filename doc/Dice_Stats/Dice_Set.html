@@ -90,6 +90,8 @@
     
     <li ><a href="#method-i-standard_deviation">#standard_deviation</a>
     
+    <li ><a href="#method-i-too_complex-3F">#too_complex?</a>
+    
     <li ><a href="#method-i-variance">#variance</a>
     
   </ul>
@@ -190,6 +192,7 @@ interactively through <a href="Dice_Set.html#method-i-p">#p</a>.</p>
         <span class="ruby-ivar">@dice</span> = []
         <span class="ruby-ivar">@constant</span> = <span class="ruby-value">0</span>
         <span class="ruby-ivar">@input_string</span> = <span class="ruby-identifier">dice_string</span>
+        <span class="ruby-ivar">@aborted_probability_distribution</span> = <span class="ruby-keyword">false</span>
 
         <span class="ruby-identifier">split_string</span> = <span class="ruby-identifier">dice_string</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;+&#39;</span>)
 
@@ -208,7 +211,7 @@ interactively through <a href="Dice_Set.html#method-i-p">#p</a>.</p>
 
         <span class="ruby-keyword">if</span> <span class="ruby-ivar">@dice</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">1</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">memo</span>,<span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">memo</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">probability_distribution</span>.<span class="ruby-identifier">length</span> } <span class="ruby-operator">&gt;</span> <span class="ruby-value">10_000_000</span>
                 <span class="ruby-comment"># if the n-ary cartesian product has to process more than 10,000,000 combinations it can take quite a while to finish...</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Too complex&quot;</span>
+                <span class="ruby-ivar">@aborted_probability_distribution</span> = <span class="ruby-keyword">true</span>
         <span class="ruby-keyword">else</span>
                 <span class="ruby-ivar">@dice</span>.<span class="ruby-identifier">sort!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d1</span>,<span class="ruby-identifier">d2</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d2</span>.<span class="ruby-identifier">sides</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">d1</span>.<span class="ruby-identifier">sides</span> }
 
@@ -267,7 +270,7 @@ ommitted.</p>
 
           
           <div class="method-source-code" id="clean_string-source">
-            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 112</span>
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 113</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">clean_string</span>(<span class="ruby-identifier">with_constant</span>=<span class="ruby-keyword">true</span>)
         <span class="ruby-identifier">formatted_string</span> = <span class="ruby-string">&quot;&quot;</span>
         <span class="ruby-ivar">@dice</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> 
@@ -309,7 +312,7 @@ and combines them.</p>
 
           
           <div class="method-source-code" id="combine_probability_distributions-source">
-            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 103</span>
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 104</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">combine_probability_distributions</span>
         <span class="ruby-identifier">separate_distributions</span> = <span class="ruby-ivar">@dice</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">probability_distribution</span> }
         <span class="ruby-constant">Internal_Utilities</span><span class="ruby-operator">::</span><span class="ruby-constant">Math_Utilities</span>.<span class="ruby-constant">Cartesian_Product_For_Probabilities</span>(<span class="ruby-identifier">separate_distributions</span>)
@@ -343,7 +346,7 @@ and combines them.</p>
 
           
           <div class="method-source-code" id="expected-source">
-            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 84</span>
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">expected</span>
         <span class="ruby-ivar">@dice</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">memo</span>, <span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">memo</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">expected</span> }.<span class="ruby-identifier">to_f</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@constant</span>
 <span class="ruby-keyword">end</span></pre>
@@ -376,7 +379,7 @@ and combines them.</p>
 
           
           <div class="method-source-code" id="max-source">
-            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 72</span>
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 73</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">max</span>
         <span class="ruby-ivar">@dice</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">memo</span>, <span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">memo</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">max</span> }.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@constant</span>
 <span class="ruby-keyword">end</span></pre>
@@ -409,7 +412,7 @@ and combines them.</p>
 
           
           <div class="method-source-code" id="min-source">
-            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 78</span>
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 79</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">min</span>
         <span class="ruby-ivar">@dice</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">memo</span>, <span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">memo</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">min</span> }.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@constant</span>
 <span class="ruby-keyword">end</span></pre>
@@ -443,7 +446,7 @@ Filtered_distribution.rb.</p>
 
           
           <div class="method-source-code" id="p-source">
-            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 139</span>
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 140</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">p</span>
         <span class="ruby-identifier">weighted_prob_dist</span> = <span class="ruby-ivar">@probability_distribution</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">m</span>,(<span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span>)<span class="ruby-operator">|</span> <span class="ruby-identifier">m</span>[<span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-ivar">@constant</span>] = <span class="ruby-identifier">v</span>; <span class="ruby-identifier">m</span> }
         <span class="ruby-identifier">filtered_distribution</span> = <span class="ruby-constant">Internal_Utilities</span><span class="ruby-operator">::</span><span class="ruby-constant">Filtered_distribution</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">weighted_prob_dist</span>)
@@ -479,7 +482,7 @@ space for the mroe complicated rolls.</p>
 
           
           <div class="method-source-code" id="print_probability-source">
-            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 127</span>
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 128</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_probability</span>
         <span class="ruby-ivar">@probability_distribution</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;p(#{k}) =&gt; #{v.round(8).to_f}&quot;</span>}
 <span class="ruby-keyword">end</span></pre>
@@ -512,7 +515,7 @@ space for the mroe complicated rolls.</p>
 
           
           <div class="method-source-code" id="roll-source">
-            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 133</span>
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 134</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">roll</span>
         <span class="ruby-ivar">@dice</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-ivar">@constant</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">memo</span>,<span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">memo</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">roll</span> }
 <span class="ruby-keyword">end</span></pre>
@@ -545,9 +548,43 @@ space for the mroe complicated rolls.</p>
 
           
           <div class="method-source-code" id="standard_deviation-source">
-            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 96</span>
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 97</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">standard_deviation</span>
         <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">variance</span>, <span class="ruby-value">10</span>).<span class="ruby-identifier">sqrt</span>(<span class="ruby-value">5</span>).<span class="ruby-identifier">round</span>(<span class="ruby-value">10</span>).<span class="ruby-identifier">to_f</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-too_complex-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">too_complex?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>If the probability distribution was determined to be too complex to compute
+this will return true.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="too_complex-3F-source">
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 148</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">too_complex?</span>
+        <span class="ruby-ivar">@aborted_probability_distribution</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -578,7 +615,7 @@ space for the mroe complicated rolls.</p>
 
           
           <div class="method-source-code" id="variance-source">
-            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 90</span>
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 91</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">variance</span>
         <span class="ruby-ivar">@probability_distribution</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">memo</span>, (<span class="ruby-identifier">key</span>,<span class="ruby-identifier">val</span>)<span class="ruby-operator">|</span> <span class="ruby-identifier">memo</span> <span class="ruby-operator">+</span> ((<span class="ruby-identifier">key</span> <span class="ruby-operator">-</span> (<span class="ruby-identifier">expected</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@constant</span>))<span class="ruby-operator">**</span><span class="ruby-value">2</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">val</span>) }.<span class="ruby-identifier">round</span>(<span class="ruby-value">10</span>).<span class="ruby-identifier">to_f</span>
 <span class="ruby-keyword">end</span></pre>

@@ -29,6 +29,7 @@ module Dice_Stats
 			@dice = []
 			@constant = 0
 			@input_string = dice_string
+			@aborted_probability_distribution = false
 
 			split_string = dice_string.split('+')
 
@@ -47,7 +48,7 @@ module Dice_Stats
 
 			if @dice.inject(1) { |memo,d| memo * d.probability_distribution.length } > 10_000_000
 				# if the n-ary cartesian product has to process more than 10,000,000 combinations it can take quite a while to finish...
-				puts "Too complex"
+				@aborted_probability_distribution = true
 			else
 				@dice.sort! { |d1,d2| d2.sides <=> d1.sides }
 
@@ -140,6 +141,12 @@ module Dice_Stats
 			weighted_prob_dist = @probability_distribution.inject(Hash.new) { |m,(k,v)| m[k+@constant] = v; m }
 			filtered_distribution = Internal_Utilities::Filtered_distribution.new(weighted_prob_dist)
 			return filtered_distribution
+		end
+
+		##
+		# If the probability distribution was determined to be too complex to compute this will return true.
+		def too_complex?
+			@aborted_probability_distribution
 		end
 	end
 end

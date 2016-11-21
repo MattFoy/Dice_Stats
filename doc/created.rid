@@ -1,11 +1,11 @@
-Tue, 15 Nov 2016 23:24:24 -0500
-./dice_stats-0.0.4.gem	Tue, 15 Nov 2016 23:23:51 -0500
-./dice_stats.gemspec	Tue, 15 Nov 2016 20:11:25 -0500
-./README.md	Tue, 15 Nov 2016 23:15:43 -0500
-./test.sh	Tue, 15 Nov 2016 20:07:15 -0500
-./lib/Dice_Set.rb	Tue, 15 Nov 2016 23:24:15 -0500
+Sun, 20 Nov 2016 19:41:11 -0500
+./dice_stats.gemspec	Sun, 20 Nov 2016 16:56:34 -0500
+./README.md	Tue, 15 Nov 2016 23:31:32 -0500
+./dice_stats-0.1.0.gem	Sun, 20 Nov 2016 19:41:02 -0500
+./test.sh	Sun, 20 Nov 2016 17:00:10 -0500
+./lib/Dice_Set.rb	Sun, 20 Nov 2016 19:40:44 -0500
 ./lib/Internal_Utilities/Arbitrary_base_counter.rb	Tue, 15 Nov 2016 23:14:30 -0500
-./lib/Internal_Utilities/probability_cache_db.rb	Tue, 15 Nov 2016 23:23:30 -0500
+./lib/Internal_Utilities/probability_cache_db.rb	Sun, 20 Nov 2016 16:55:51 -0500
 ./lib/Internal_Utilities/Math_Utilities.rb	Tue, 15 Nov 2016 22:54:30 -0500
 ./lib/Internal_Utilities/Filtered_distribution.rb	Tue, 15 Nov 2016 22:46:58 -0500
 ./lib/dice_stats.rb	Tue, 15 Nov 2016 23:19:54 -0500
