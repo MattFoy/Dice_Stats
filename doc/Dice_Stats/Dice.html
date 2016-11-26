@@ -180,7 +180,7 @@ href="http://mathworld.wolfram.com/Dice.html">mathworld.wolfram.com/Dice.html</a
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(dice_count, dice_sides)</span>
+            class="method-args">(dice_count, dice_sides, do_calculation=true)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -198,7 +198,7 @@ assumed to go from 1 to <code>dice_sides</code>.</p>
           
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/Dice.rb, line 22</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">dice_count</span>, <span class="ruby-identifier">dice_sides</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">dice_count</span>, <span class="ruby-identifier">dice_sides</span>, <span class="ruby-identifier">do_calculation</span>=<span class="ruby-keyword">true</span>)
         <span class="ruby-ivar">@count</span> = <span class="ruby-identifier">dice_count</span>
         <span class="ruby-ivar">@sides</span> = <span class="ruby-identifier">dice_sides</span>
         <span class="ruby-ivar">@probability_distribution</span> = {}
@@ -206,7 +206,11 @@ assumed to go from 1 to <code>dice_sides</code>.</p>
         <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@count</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@sides</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>)
                 <span class="ruby-comment">#error</span>
         <span class="ruby-keyword">else</span>
-                <span class="ruby-ivar">@probability_distribution</span> = <span class="ruby-identifier">calculate_probability_distribution</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">do_calculation</span>
+                        <span class="ruby-ivar">@probability_distribution</span> = <span class="ruby-identifier">calculate_probability_distribution</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-ivar">@probability_distribution</span> = {}
+                <span class="ruby-keyword">end</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -247,7 +251,7 @@ initialization</p>
 
           
           <div class="method-source-code" id="calculate_probability_distribution-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 96</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 100</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">calculate_probability_distribution</span>
         <span class="ruby-identifier">number_of_possible_combinations</span> = (<span class="ruby-ivar">@sides</span><span class="ruby-operator">**</span><span class="ruby-ivar">@count</span>)
         <span class="ruby-comment">#puts &quot;Number of possible combinations: #{number_of_possible_combinations}&quot;</span>
@@ -308,7 +312,7 @@ initialization</p>
 
           
           <div class="method-source-code" id="expected-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 48</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 52</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">expected</span>
         <span class="ruby-constant">BigDecimal</span>(<span class="ruby-ivar">@count</span>) <span class="ruby-operator">*</span> ((<span class="ruby-ivar">@sides</span> <span class="ruby-operator">+</span> <span class="ruby-value">1.0</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2.0</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -341,7 +345,7 @@ initialization</p>
 
           
           <div class="method-source-code" id="max-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 36</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 40</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">max</span>
         <span class="ruby-ivar">@count</span><span class="ruby-operator">*</span><span class="ruby-ivar">@sides</span>
 <span class="ruby-keyword">end</span></pre>
@@ -374,7 +378,7 @@ initialization</p>
 
           
           <div class="method-source-code" id="min-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 42</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">min</span>
         <span class="ruby-ivar">@count</span>
 <span class="ruby-keyword">end</span></pre>
@@ -409,7 +413,7 @@ href="Dice_Set.html#method-i-p">Dice_Stats::Dice_Set#p</a>.</p>
 
           
           <div class="method-source-code" id="p-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 130</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 134</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">p</span>(<span class="ruby-identifier">val</span>)
         <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@probability_distribution</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">val</span>))
                 <span class="ruby-keyword">return</span> <span class="ruby-ivar">@probability_distribution</span>[<span class="ruby-identifier">val</span>]
@@ -446,7 +450,7 @@ href="Dice_Set.html#method-i-p">Dice_Stats::Dice_Set#p</a>.</p>
 
           
           <div class="method-source-code" id="print_stats-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 71</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_stats</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Min: #{min}&quot;</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Max: #{max}&quot;</span>
@@ -487,7 +491,7 @@ href="Dice_Set.html#method-i-p">Dice_Stats::Dice_Set#p</a>.</p>
 
           
           <div class="method-source-code" id="roll-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 85</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 89</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">roll</span>
         <span class="ruby-identifier">sum</span> = <span class="ruby-value">0</span>
         <span class="ruby-ivar">@count</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
@@ -524,7 +528,7 @@ href="Dice_Set.html#method-i-p">Dice_Stats::Dice_Set#p</a>.</p>
 
           
           <div class="method-source-code" id="standard_deviation-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 65</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 69</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">standard_deviation</span>
         <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">variance</span>).<span class="ruby-identifier">sqrt</span>(<span class="ruby-value">5</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -557,7 +561,7 @@ href="Dice_Set.html#method-i-p">Dice_Stats::Dice_Set#p</a>.</p>
 
           
           <div class="method-source-code" id="variance-source">
-            <pre><span class="ruby-comment"># File lib/Dice.rb, line 54</span>
+            <pre><span class="ruby-comment"># File lib/Dice.rb, line 58</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">variance</span>
         <span class="ruby-identifier">var</span> = <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>)
         (<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-ivar">@sides</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>

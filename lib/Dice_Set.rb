@@ -18,13 +18,57 @@ module Dice_Stats
 		attr_accessor :dice
 
 		##
+		# Returns the "clean string" for a dice pattern without actually instantiating the class, calculating the probability, etc.
+		# Good to use to check a cache hit if results are being cached
+		def self.Get_Clean_String(dice_string, with_constant=true)
+			dice = []
+			constant = 0
+
+
+			split_string = dice_string.split('+')
+
+			split_string.map!{|i| i.strip }
+
+			split_string.count.times { |i|
+				if /\d+[dD]\d+/.match(split_string[i])
+					sub_string_split = split_string[i].downcase.split('d')
+					dice << Dice.new(sub_string_split[0].to_i, sub_string_split[1].to_i, false)
+				elsif (split_string[i].to_i > 0)
+					constant += split_string[i].to_i
+				else
+					puts "Unexpected paramter: #{split_string[0]}"
+				end
+			}
+
+			dice.sort! { |d1,d2| d2.sides <=> d1.sides }
+
+			formatted_string = ""
+			dice.each { |d| 
+				formatted_string += d.count.to_s + "d" + d.sides.to_s + " + "
+			}
+			if with_constant && constant > 0
+				return (formatted_string + constant.to_s)
+			else
+				return (formatted_string[0..formatted_string.length-4])
+			end
+		end
+
+		##
 		# Instantiates a new Dice_Set with the specified +dice_string+ pattern.
 		# Examples:
 		# "2d6 + 1d3"
 		# "2d6 + 5"
 		# "1d8"
 		# "5d4 + 3d10"
-		def initialize(dice_string)
+		# If +probability_distribution+ is set, no distributions will be calculated and the provided distribution will be used.
+		def initialize(dice_string, probability_distribution=nil)
+			
+			# Reject any predefined probability distributions that don't sum to 1.0.
+			# Perhaps in the future I should add slightly better checks, but this is adequate for now.
+			if probability_distribution != nil && (probability_distribution.inject(0) { |memo,(k,v)| memo + v }.round(3).to_f != 1.0)
+				probability_distribution = nil
+			end
+
 			@dice = []
 			@constant = 0
 			@input_string = dice_string
@@ -37,7 +81,9 @@ module Dice_Stats
 			split_string.count.times { |i|
 				if /\d+[dD]\d+/.match(split_string[i])
 					sub_string_split = split_string[i].downcase.split('d')
-					@dice << Dice.new(sub_string_split[0].to_i, sub_string_split[1].to_i)
+
+					# Skip calculating the sub-die distribution if the total one is already cached
+					@dice << Dice.new(sub_string_split[0].to_i, sub_string_split[1].to_i, (probability_distribution == nil))
 				elsif (split_string[i].to_i > 0)
 					@constant += split_string[i].to_i
 				else
@@ -45,17 +91,16 @@ module Dice_Stats
 				end
 			}
 
-			if @dice.inject(1) { |memo,d| memo * d.probability_distribution.length } > 10_000_000
-				# if the n-ary cartesian product has to process more than 10,000,000 combinations it can take quite a while to finish...
-				@aborted_probability_distribution = true
-			else
-				@dice.sort! { |d1,d2| d2.sides <=> d1.sides }
+			@dice.sort! { |d1,d2| d2.sides <=> d1.sides }
 
-				@probability_distribution = combine_probability_distributions
+			if probability_distribution != nil
+				@probability_distribution = probability_distribution
+			else
+				@probability_distribution = combine_probability_distributions 
+			end
 				
-				if (@probability_distribution.inject(0) { |memo,(k,v)| memo + v }.round(3).to_f != 1.0)
-					#puts "Error in probability distrubtion."
-				end
+			if (@probability_distribution.inject(0) { |memo,(k,v)| memo + v }.round(3).to_f != 1.0)
+				#puts "Error in probability distrubtion."
 			end
 		end
 

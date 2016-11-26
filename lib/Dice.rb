@@ -19,7 +19,7 @@ module Dice_Stats
 		##
 		# Creates a new Dice instance of a number of dice (+dice_count+) with +dice_sides+ faces.
 		# All dice are assumed to go from 1 to +dice_sides+.
-		def initialize(dice_count, dice_sides)
+		def initialize(dice_count, dice_sides, do_calculation=true)
 			@count = dice_count
 			@sides = dice_sides
 			@probability_distribution = {}
@@ -27,7 +27,11 @@ module Dice_Stats
 			if (@count < 0 || @sides < 0)
 				#error
 			else
-				@probability_distribution = calculate_probability_distribution
+				if do_calculation
+					@probability_distribution = calculate_probability_distribution
+				else
+					@probability_distribution = {}
+				end
 			end
 		end
 
