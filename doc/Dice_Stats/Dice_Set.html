@@ -74,6 +74,8 @@
     
     <li ><a href="#method-c-new">::new</a>
     
+    <li ><a href="#method-i-adjusted_distribution">#adjusted_distribution</a>
+    
     <li ><a href="#method-i-clean_string">#clean_string</a>
     
     <li ><a href="#method-i-combine_probability_distributions">#combine_probability_distributions</a>
@@ -316,6 +318,40 @@ used.</p>
        </header>
 
     
+      <div id="method-i-adjusted_distribution" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">adjusted_distribution</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Add the constant the the probability distribution, useful for printing /
+output purposes</p>
+          
+          
+
+          
+          <div class="method-source-code" id="adjusted_distribution-source">
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 189</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">adjusted_distribution</span>
+        <span class="ruby-ivar">@probability_distribution</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">m</span>,(<span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span>)<span class="ruby-operator">|</span> <span class="ruby-identifier">m</span>[<span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-ivar">@constant</span>] = <span class="ruby-identifier">v</span>; <span class="ruby-identifier">m</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-clean_string" class="method-detail ">
         
         <div class="method-heading">
@@ -516,8 +552,7 @@ Filtered_distribution.rb.</p>
           <div class="method-source-code" id="p-source">
             <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 176</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">p</span>
-        <span class="ruby-identifier">weighted_prob_dist</span> = <span class="ruby-ivar">@probability_distribution</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">m</span>,(<span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span>)<span class="ruby-operator">|</span> <span class="ruby-identifier">m</span>[<span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-ivar">@constant</span>] = <span class="ruby-identifier">v</span>; <span class="ruby-identifier">m</span> }
-        <span class="ruby-identifier">filtered_distribution</span> = <span class="ruby-constant">Internal_Utilities</span><span class="ruby-operator">::</span><span class="ruby-constant">Filtered_distribution</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">weighted_prob_dist</span>)
+        <span class="ruby-identifier">filtered_distribution</span> = <span class="ruby-constant">Internal_Utilities</span><span class="ruby-operator">::</span><span class="ruby-constant">Filtered_distribution</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">adjusted_distribution</span>)
         <span class="ruby-keyword">return</span> <span class="ruby-identifier">filtered_distribution</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -650,7 +685,7 @@ this will return true.</p>
 
           
           <div class="method-source-code" id="too_complex-3F-source">
-            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 184</span>
+            <pre><span class="ruby-comment"># File lib/Dice_Set.rb, line 183</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">too_complex?</span>
         <span class="ruby-ivar">@aborted_probability_distribution</span>
 <span class="ruby-keyword">end</span></pre>
