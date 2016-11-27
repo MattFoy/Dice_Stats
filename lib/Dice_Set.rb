@@ -174,8 +174,7 @@ module Dice_Stats
 		## 
 		# Instantiates and returns a Filtered_distribution. See the documentation for Filtered_distribution.rb.
 		def p
-			weighted_prob_dist = @probability_distribution.inject(Hash.new) { |m,(k,v)| m[k+@constant] = v; m }
-			filtered_distribution = Internal_Utilities::Filtered_distribution.new(weighted_prob_dist)
+			filtered_distribution = Internal_Utilities::Filtered_distribution.new(adjusted_distribution)
 			return filtered_distribution
 		end
 
@@ -183,6 +182,12 @@ module Dice_Stats
 		# If the probability distribution was determined to be too complex to compute this will return true.
 		def too_complex?
 			@aborted_probability_distribution
+		end
+
+		## 
+		# Add the constant the the probability distribution, useful for printing / output purposes
+		def adjusted_distribution
+			@probability_distribution.inject(Hash.new) { |m,(k,v)| m[k+@constant] = v; m }
 		end
 	end
 end

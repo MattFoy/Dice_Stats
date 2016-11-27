@@ -37,4 +37,12 @@ RSpec.describe Dice_Stats::Dice_Set do
 		expect(p_high.round(5).to_f) .to eq(0.5)
 		expect(p_low.round(5).to_f) .to eq(0.5)
 	end
+
+	it 'respects constants when querying probabilities' do
+		d = Dice_Stats::Dice_Set.new("2d4 + 5")
+
+		p_6 = d.p.eq(6).get
+		# Lowest possible roll should be a 7, so p(6) == 0
+		expect(p_6.round(5).to_f) .to eq(0.0)
+	end
 end
