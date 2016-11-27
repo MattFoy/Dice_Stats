@@ -83,7 +83,13 @@ module Dice_Stats
 					sub_string_split = split_string[i].downcase.split('d')
 
 					# Skip calculating the sub-die distribution if the total one is already cached
-					@dice << Dice.new(sub_string_split[0].to_i, sub_string_split[1].to_i, (probability_distribution == nil))
+					number_of_dice = sub_string_split[0].to_i
+					dice_faces = sub_string_split[1].to_i
+
+					calculate_probability = (probability_distribution == nil) && (number_of_dice * dice_faces <= 1000)
+					@aborted_probability_distribution = true if !calculate_probability
+
+					@dice << Dice.new(number_of_dice, dice_faces, calculate_probability)
 				elsif (split_string[i].to_i > 0)
 					@constant += split_string[i].to_i
 				else
@@ -96,7 +102,12 @@ module Dice_Stats
 			if probability_distribution != nil
 				@probability_distribution = probability_distribution
 			else
-				@probability_distribution = combine_probability_distributions 
+				if @aborted_probability_distribution || (100_000 < @dice.inject(0) { |m,d| m + (d.sides * d.count) })
+					@probability_distribution = {}
+					@aborted_probability_distribution = true
+				else
+					@probability_distribution = combine_probability_distributions 
+				end
 			end
 				
 			if (@probability_distribution.inject(0) { |memo,(k,v)| memo + v }.round(3).to_f != 1.0)
